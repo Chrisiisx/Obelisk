@@ -5,9 +5,10 @@ services:
     build: ./server
     container_name: api
     environment:
-      - DATABASE_URL=postgresql://postgres:${DB_PASSWORD}@postgres-db:5432/obelisk
+      - DATABASE_URL=postgresql://postgres:${DB_PASSWORD}@postgres-db:${DB_PORT}/obelisk
       - JWT_SECRET=${JWT_SECRET} # Una chiave forte per firmare i token
       - NODE_ENV=production
+      - SERVER_PORT=${SERVER_PORT}
     ports:
       - "3001:3001" # Espone l'API all'host (e al frontend)
     depends_on:
@@ -30,7 +31,7 @@ services:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
-      - ./postgres-init:/docker-entrypoint-initdb.d/
+      - ./pgInit:/docker-entrypoint-initdb.d/
     networks:
       - obelisk-network
     healthcheck:
