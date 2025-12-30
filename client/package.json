@@ -12,7 +12,6 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
-
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Chrisiisx/Obelisk.git"
@@ -21,18 +20,16 @@
     "Obelisk",
     "Password-Manager"
   ],
-
-
   "bugs": {
     "url": "https://github.com/Chrisiisx/Obelisk/issues"
   },
-
   "homepage": "https://github.com/Chrisiisx/Obelisk#readme",
-
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
+    "lucide-react": "^0.562.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^7.11.0",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
