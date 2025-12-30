@@ -2,4 +2,4 @@
 This is a work in progress. Not ready for production use.
 
 # What Is?
-Obelisk is the open-source password manager built for everyone who values security without complexity. From solo freelancers to growing teams, Obelisk offers a unified vault where your credentials are shielded by end-to-end encryption.
+an open-source password manager designed to be fully self-hosted with a single docker-compose up. The goal is to create a zero-knowledge system where teams and freelancers can share credentials securely without depending on external services like Firebase or managed databases.
