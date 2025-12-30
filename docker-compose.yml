@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  obelisk-api: #Backend Server
+    build: ./server
+    container_name: api
+    environment:
+      - DATABASE_URL=postgresql://postgres:${DB_PASSWORD}@postgres-db:5432/obelisk
+      - JWT_SECRET=${JWT_SECRET} # Una chiave forte per firmare i token
+      - NODE_ENV=production
+    ports:
+      - "3001:3001" # Espone l'API all'host (e al frontend)
+    depends_on:
+      - postgres-db
+    networks:
+      - obelisk-network
+    # Volume per il hot-reload in sviluppo
+    volumes:
+      - ./server:/app
+
+  # 2. DATABASE PostgreSQL
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: db
+    environment:
+      POSTGRES_DB: obelisk           # Nome del database principale
+      POSTGRES_USER: postgres        # Utente admin di default (puoi cambiarlo)
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-admin}  # Legge da .env o usa default
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./postgres-init:/docker-entrypoint-initdb.d/
+    networks:
+      - obelisk-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  obelisk-web-build: #Frontend
+    build: ./client
+    container_name: ui
+    ports:
+      - "5173:5173" # Porta di Vite in dev
+    networks:
+      - obelisk-network
+
+networks:
+  obelisk-network:
+    driver: bridge
+
+volumes:
+  postgres-data: # Il volume dove PostgreSQL salva i dati in modo persistente

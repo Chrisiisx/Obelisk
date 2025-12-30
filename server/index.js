@@ -1,16 +1,19 @@
-const express = require("express")
-const cors = require("cors")
-const app = express()
-const ServerPort = 3001
-
-
-app.use(express.json())
-
-app.post("/test", (req, res) => {
-    console.log(req.body)
-    res.send("Called Test API")
+const express = require('express');
+const authRoutes = require('./routes/auth');
+const app = express();
+const dotenv = require("dotenv");
+dotenv.config({
+    path: '../.env'
 })
+// Middleware per parsare JSON
+app.use(express.json());
 
-app.listen(ServerPort, () => {
-    console.log(`[SUCCESS] Server Listening On Port: ${ServerPort}`)
-})
+// Monta le route di autenticazione sotto /api/auth
+app.use('/api/auth', authRoutes);
+
+// Altri endpoint potranno essere:
+// app.use('/api/passwords', passwordRoutes);
+
+app.listen(process.env.SERVER_PORT, () => {
+  console.log(`Server in ascolto su ${process.env.SERVER_PORT}`);
+});
