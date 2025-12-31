@@ -9,6 +9,7 @@ services:
       - JWT_SECRET=${JWT_SECRET} # Strong key
       - NODE_ENV=production
       - SERVER_PORT=${SERVER_PORT}
+      - SALT_ROUNDS=${SALT_ROUNDS}
     ports:
       - "3001:3001" # Expose API to frontend or external access
     depends_on:

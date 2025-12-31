@@ -1,5 +1,6 @@
 const express = require('express');
 const authRoutes = require('./routes/auth');
+const cors = require("cors")
 const app = express();
 // const dotenv = require("dotenv");
 // dotenv.config({
@@ -7,18 +8,14 @@ const app = express();
 // })
 // Middleware per parsare JSON
 app.use(express.json());
+app.use(cors())
 
 // Monta le route di autenticazione sotto /api/auth
 app.use('/api/auth', authRoutes);
-app.get('/api/debug/env', (req, res) => {
-  res.json({
-    serverPort: process.env.SERVER_PORT,
-    allEnv: Object.keys(process.env)
-  });
-});
-// Altri endpoint potranno essere:
-// app.use('/api/passwords', passwordRoutes);
 
-app.listen(process.env.SERVER_PORT, () => {
-  console.log(`Server in ascolto su ${process.env.SERVER_PORT}`);
+
+
+
+app.listen(process.env.SERVER_PORT || 3001, () => {
+  console.log(`Server in ascolto su ${process.env.SERVER_PORT || 3001}`);
 });
