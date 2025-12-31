@@ -6,16 +6,16 @@ services:
     container_name: api
     environment:
       - DATABASE_URL=postgresql://postgres:${DB_PASSWORD}@postgres-db:${DB_PORT}/obelisk
-      - JWT_SECRET=${JWT_SECRET} # Una chiave forte per firmare i token
+      - JWT_SECRET=${JWT_SECRET} # Strong key
       - NODE_ENV=production
       - SERVER_PORT=${SERVER_PORT}
     ports:
-      - "3001:3001" # Espone l'API all'host (e al frontend)
+      - "3001:3001" # Expose API to frontend or external access
     depends_on:
       - postgres-db
     networks:
       - obelisk-network
-    # Volume per il hot-reload in sviluppo
+    # hot-relaod during development
     volumes:
       - ./server:/app
 
@@ -24,9 +24,9 @@ services:
     image: postgres:15-alpine
     container_name: db
     environment:
-      POSTGRES_DB: obelisk           # Nome del database principale
-      POSTGRES_USER: postgres        # Utente admin di default (puoi cambiarlo)
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-admin}  # Legge da .env o usa default
+      POSTGRES_DB: obelisk           # DB Name
+      POSTGRES_USER: postgres        # admin user (default)
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-admin}  # .env or default password
     ports:
       - "5432:5432"
     volumes:
@@ -44,7 +44,7 @@ services:
     build: ./client
     container_name: ui
     ports:
-      - "5173:5173" # Porta di Vite in dev
+      - "5173:5173" # Vite dev port
     networks:
       - obelisk-network
 
@@ -53,4 +53,4 @@ networks:
     driver: bridge
 
 volumes:
-  postgres-data: # Il volume dove PostgreSQL salva i dati in modo persistente
+  postgres-data: # PostgreSQL data persistence
