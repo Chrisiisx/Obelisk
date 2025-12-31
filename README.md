@@ -9,7 +9,7 @@ This is a work in progress. Not ready for production use.
 ![Status](https://img.shields.io/badge/Status-Active%20Development-orange.svg)
 
 
-> **"Your local digital fortress - already gaining traction with our first GitHub stars!"** 🎉
+> **"Your local digital fortress"** 🎉
 
 ## 🗿 What is Obelisk?
 
