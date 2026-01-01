@@ -92,7 +92,6 @@ const registerUser = async (email: string, password: string, hint?: string) => {
       throw new Error(errorData.message || 'Registration failed');
     }
 
-    console.log(response.json())
     return await response.json();
   } catch (error: any) {
     console.error('Registration API error:', error);

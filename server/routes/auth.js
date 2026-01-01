@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken")
 router.use(express.json())
 
 //Password Hashing Confs
-const SALT_ROUNDS = process.env.SALT_ROUNDS
+const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS)
 const JWT_SECRET = process.env.JWT_SECRET
 
 
@@ -37,7 +37,7 @@ router.post('/register', async (req, res) => {
       }
 
       //Hashing Password
-      const passwordHash = bcrypt.hash(password, SALT_ROUNDS);
+      const passwordHash = bcrypt.hashSync(password, SALT_ROUNDS)
 
 
       const user = await query(
@@ -57,6 +57,7 @@ router.post('/register', async (req, res) => {
 
 
       res.status(201).json({
+        success: true,
         message: "Utente registrato con successo",
         token,
         user: {
@@ -68,7 +69,7 @@ router.post('/register', async (req, res) => {
 
     }catch(error){
       console.log(error)
-      res.status(500).json({ error: "Errore interno del server." })
+      res.status(500).json({ success: false, error: "Errore interno del server." })
     }
 });
 
