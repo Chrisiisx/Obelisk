@@ -160,7 +160,7 @@ const Login: React.FC = () => {
             
             {
               isMaster
-              :
+              ?
               <>
                 <div className="mt-8 p-4 bg-linear-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-lg">
                   <div className="flex items-start">
@@ -190,7 +190,7 @@ const Login: React.FC = () => {
                   </div>
                 </div>
               </>
-              ?
+              :
               null
             }
 
