@@ -1,1 +1,6 @@
 -Login / Register System
+
+Essendo interamente self hosted non credo che la pagina register sia adatta:
+una volta fatto "docker compose up -d" si crea in automatico un utenza admin/admin, con la quale fare il primo accesso (sarà fatto da chi mette in self hosting Obelisk)
+una volta che fa l'accesso, gli si chiede di cambiare nome utente e password per questo'account (account master)
+dall'account master si possono creare le altre varie utenze per gli altri membri dell'azienda, tutto dalla dashboard (es: sezione "aggiungi utente")
