@@ -48,6 +48,9 @@ services:
       - "5173:5173" # Vite dev port
     networks:
       - obelisk-network
+    # hot-relaod during development
+    volumes:
+      - ./client/src:/app/src 
 
 networks:
   obelisk-network:
