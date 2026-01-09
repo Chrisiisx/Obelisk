@@ -43,7 +43,7 @@ const Login: React.FC = () => {
         localStorage.setItem('user', JSON.stringify(data.user));
         
         // Reindirizza alla dashboard
-        navigate('/dashboard');
+        navigate('/changemaster');
       } else {
         setError(data.error || 'Credenziali non valide');
       }
