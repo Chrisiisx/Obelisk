@@ -6,20 +6,21 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isMaster, setIsMaster] = useState(false)
   const navigate = useNavigate();
   const API_BASE_URL = 'http://localhost:3001';
-//   function randomStr(length: number){
+  //   function randomStr(length: number){
 
-//     let result = '';
-//     const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-//     for (let i = 0; i < length; i++) {
-//         const randomInd = Math.floor(Math.random() * characters.length);
-//         result += characters.charAt(randomInd);
-//     }
-//     return result;
+  //     let result = '';
+  //     const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  //     for (let i = 0; i < length; i++) {
+  //         const randomInd = Math.floor(Math.random() * characters.length);
+  //         result += characters.charAt(randomInd);
+  //     }
+  //     return result;
 
 
-//   }
+  //   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,11 +40,18 @@ const Login: React.FC = () => {
 
       if (response.ok) {
         // Salva il token
+        let user = data.user
+        if (user.email == "admin@admin.com") {
+          setIsMaster(true)
+        }
         localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        
-        // Reindirizza alla dashboard
-        navigate('/changemaster');
+        localStorage.setItem('user', JSON.stringify(user));
+
+        if (isMaster) {
+          navigate('/changemaster');
+        } else {
+          navigate('/dashboard')
+        }
       } else {
         setError(data.error || 'Credenziali non valide');
       }
@@ -69,7 +77,7 @@ const Login: React.FC = () => {
           <div className="bg-linear-to-r from-blue-600 to-blue-800 p-8 text-center">
             <div className="flex justify-center mb-4">
               <div className="w-18 h-18 bg-white/10 rounded-full flex items-center justify-center">
-              <img src={`https://gravatar.com/avatar/adminAvatar?s=400&d=robohash&r=x`} alt="profileImage" />
+                <img src={`https://gravatar.com/avatar/adminAvatar?s=400&d=robohash&r=x`} alt="profileImage" />
                 <i className="fas fa-lock text-white text-2xl"></i>
               </div>
             </div>
@@ -134,8 +142,8 @@ const Login: React.FC = () => {
                 type="submit"
                 disabled={loading}
                 className={`w-full py-3 px-4 rounded-lg font-semibold transition ${loading
-                    ? 'bg-blue-400 cursor-not-allowed'
-                    : 'bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800'
+                  ? 'bg-blue-400 cursor-not-allowed'
+                  : 'bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800'
                   } text-white shadow-md`}
               >
                 {loading ? (
@@ -149,34 +157,43 @@ const Login: React.FC = () => {
               </button>
             </form>
 
-            {/* Master Account Hint */}
-            <div className="mt-8 p-4 bg-linear-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-lg">
-              <div className="flex items-start">
-                <i className="fas fa-crown text-amber-500 mt-1 mr-3"></i>
-                <div>
-                  <p className="text-amber-700 text-sm mb-2">
-                    Usa queste credenziali per il primo accesso:
-                  </p>
-                  <div className="bg-white/50 p-3 rounded border border-amber-100">
-                    <div className="flex items-center mb-1">
-                      <span className="text-gray-600 text-sm w-16">Email:</span>
-                      <code className="bg-gray-100 px-2 py-1 rounded text-sm">admin@admin.com</code>
-                    </div>
-                    <div className="flex items-center">
-                      <span className="text-gray-600 text-sm w-16">Password:</span>
-                      <code className="bg-gray-100 px-2 py-1 rounded text-sm">admin</code>
+            
+            {
+              isMaster
+              :
+              <>
+                <div className="mt-8 p-4 bg-linear-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-lg">
+                  <div className="flex items-start">
+                    <i className="fas fa-crown text-amber-500 mt-1 mr-3"></i>
+                    <div>
+                      <p className="text-amber-700 text-sm mb-2">
+                        Usa queste credenziali per il primo accesso:
+                      </p>
+                      <div className="bg-white/50 p-3 rounded border border-amber-100">
+                        <div className="flex items-center mb-1">
+                          <span className="text-gray-600 text-sm w-16">Email:</span>
+                          <code className="bg-gray-100 px-2 py-1 rounded text-sm">admin@admin.com</code>
+                        </div>
+                        <div className="flex items-center">
+                          <span className="text-gray-600 text-sm w-16">Password:</span>
+                          <code className="bg-gray-100 px-2 py-1 rounded text-sm">admin</code>
+                        </div>
+                      </div>
+                      <button
+                        onClick={handleMasterAccount}
+                        className="mt-3 text-sm text-amber-600 hover:text-amber-800 font-medium flex items-center"
+                      >
+                        <i className="fas fa-mouse-pointer mr-2"></i>
+                        Usa queste credenziali
+                      </button>
                     </div>
                   </div>
-                  <button
-                    onClick={handleMasterAccount}
-                    className="mt-3 text-sm text-amber-600 hover:text-amber-800 font-medium flex items-center"
-                  >
-                    <i className="fas fa-mouse-pointer mr-2"></i>
-                    Usa queste credenziali
-                  </button>
                 </div>
-              </div>
-            </div>
+              </>
+              ?
+              null
+            }
+
           </div>
         </div>
 

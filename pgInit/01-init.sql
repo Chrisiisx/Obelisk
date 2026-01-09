@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
     password_hash TEXT NOT NULL,
     role TEXT NOT NULL,
     avatar TEXT,
+    firstAccess BOOLEAN,
     -- public_key TEXT, -- Per la crittografia asimmetrica (condivisione)
     -- private_key_encrypted TEXT, -- Chiave privata cifrata con master password
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -17,5 +18,5 @@ CREATE TABLE IF NOT EXISTS users (
 
 
 --DEFAULT MASTER USER
-INSERT INTO users (email, password_hash, role, avatar)
-VALUES ('admin@admin.com', 'admin', 'administrator', 'https://gravatar.com/avatar/adminAvatar?s=400&d=robohash&r=x')
+INSERT INTO users (email, password_hash, role, avatar, firstAccess)
+VALUES ('admin@admin.com', 'admin', 'administrator', 'https://gravatar.com/avatar/adminAvatar?s=400&d=robohash&r=x', 'true')

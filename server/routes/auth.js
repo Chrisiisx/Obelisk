@@ -32,8 +32,8 @@ router.post('/login', async (req, res) => {
     const user = userResult.rows[0];
     let isPasswordValid;
 
-    // Verifica la password
-    if(email == "admin@admin.com"){
+    // Controlliamo sia la password, se l'account è il master, e se è il primo accesso del master
+    if(email == "admin@admin.com"){  //&& user.firstAccess == true
       if(password == user.password_hash){
         isPasswordValid = true
       }
@@ -49,7 +49,7 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign(
       {
         userId: user.id,
-        email: user.email
+        email: user.email,
       },
       JWT_SECRET,
       { expiresIn: '7d' }
