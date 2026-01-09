@@ -203,7 +203,8 @@ const Home: React.FC = () => {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
               <a 
-                href="#features" 
+                href="https://www.buymeacoffee.com/chrisiisx"
+                target='_blank'
                 className="inline-flex items-center justify-center bg-transparent hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-medium text-lg border-2 border-white hover:border-blue-300 transition-all duration-200"
               >
                 ☕ Buy Me a Coffee
@@ -238,7 +239,7 @@ const Home: React.FC = () => {
             <div className="text-center md:text-right">
               <p className="mb-2">© {new Date().getFullYear()} Obelisk. An open source project.</p>
               <p className="text-gray-500">Built with passion for digital security.</p>
-              <p className='text-gray-500'>by <a href="" className='underline'>Chrisiisx</a></p>
+              <p className='text-gray-500'>by <a href="https://github.com/Chrisiisx" target='_blank' className='underline'>Chrisiisx</a></p>
             </div>
           </div>
         </div>
