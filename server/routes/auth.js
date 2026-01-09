@@ -139,5 +139,44 @@ router.post('/register', async (req, res) => {
   }
 });
 
+router.post('/verify', async (req, res) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader.replace("Bearer ", "")
+  console.log(token)
+
+  const { userId } = req.body;
+  
+  if (!token) return res.status(401).json({ valid: false });
+
+  try {
+    console.log(`===DEBUG INFO===`)
+    console.log(`[TOKEN] ${token}`)
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(`[USER ID] ${decoded.userId}`)
+
+
+    if (decoded.userId !== userId) {
+      return res.status(403).json({ valid: false });
+    }
+
+    
+    // Verifica che l'utente esista ancora nel DB
+    const user = await query(
+      'SELECT id, email FROM users WHERE id = $1',
+      [decoded.userId]
+    );
+
+    if (user.rows.length === 0) {
+      return res.status(404).json({ valid: false });
+    }
+
+    res.json({ 
+      valid: true, 
+      user: user.rows[0] 
+    });
+  } catch (error) {
+    res.status(403).json({ valid: false });
+  }
+});
 
 module.exports = router;

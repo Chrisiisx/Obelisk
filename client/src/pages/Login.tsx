@@ -7,7 +7,7 @@ const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-
+  const API_BASE_URL = 'http://localhost:3001';
 //   function randomStr(length: number){
 
 //     let result = '';
@@ -27,7 +27,7 @@ const Login: React.FC = () => {
     setError('');
 
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -154,7 +154,6 @@ const Login: React.FC = () => {
               <div className="flex items-start">
                 <i className="fas fa-crown text-amber-500 mt-1 mr-3"></i>
                 <div>
-                  <h3 className="font-semibold text-amber-800 mb-1">Account Master</h3>
                   <p className="text-amber-700 text-sm mb-2">
                     Usa queste credenziali per il primo accesso:
                   </p>
